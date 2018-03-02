@@ -21,9 +21,9 @@ import (
 	"github.com/vordimous/palm/git"
 )
 
-// versionCmd represents the version command
-var versionCmd = &cobra.Command{
-	Use:   "version",
+// featureCmd represents the feature command
+var featureCmd = &cobra.Command{
+	Use:   "feature [name] [source]",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -31,22 +31,28 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
+	Args: cobra.RangeArgs(1, 2),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("version called")
-		git.Run(&[]string{"version"})
+		fmt.Println("feature called")
+		fmt.Println(git.Run(&[]string{"branch", args[0], "master"}))
+		fmt.Println(args)
 	},
 }
 
+var name string
+
 func init() {
-	rootCmd.AddCommand(versionCmd)
+	featureCmd.Flags().StringVarP(&name, "name", "n", "", "Feature name")
+
+	rootCmd.AddCommand(featureCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// versionCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// featureCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// versionCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// featureCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

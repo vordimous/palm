@@ -14,7 +14,7 @@
 
 package main
 
-import "palm/cmd"
+import "github.com/vordimous/palm/cmd"
 
 func main() {
 	cmd.Execute()
